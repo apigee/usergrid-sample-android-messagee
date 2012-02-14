@@ -133,7 +133,7 @@ public class MessageBoard extends Activity implements View.OnClickListener{
 			String username = ((Messagee) this.getApplication()).messController.getPosts().getPostNameByIndex(i);
 			TextView usernameText = new TextView(this);
 			usernameText.setPadding(0, 0, 0, dpToPix(4));
-			usernameText.setTextColor(getResources().getColor(R.color.username_blue));
+			usernameText.setTextColor(getResources().getColor(R.color.black));
 			usernameText.setText(username);
 			usernameText.setTypeface(null,1);
 			usernameText.setTextSize(17);

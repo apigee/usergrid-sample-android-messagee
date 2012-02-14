@@ -14,7 +14,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/newmess_titlebar" />
+            android:src="@drawable/message_board_titlebar" />
 
     </RelativeLayout>
 

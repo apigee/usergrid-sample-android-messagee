@@ -171,15 +171,17 @@ public class Login extends Activity implements View.OnClickListener{
 				
 				//get posts for user
 				((Messagee) app).messController.getPostsFromClient();
-				
-				//hide logging in dialog
-				hideLoginProgressDialog();
+
 				
 				//display messageboard
 				Intent i = new Intent();
 				i.setClassName("com.project.messagee",
 						"com.project.messagee.MessageBoard");
 				startActivity(i);
+				
+				
+				//hide logging in dialog
+				hideLoginProgressDialog();
 
 			}
 		}

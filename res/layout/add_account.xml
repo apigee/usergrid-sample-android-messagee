@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
-            android:src="@drawable/newmess_titlebar" />
+            android:src="@drawable/add_acct_titlebar" />
 
         <ImageButton
             android:id="@+id/add_account_close_btn"

@@ -3,6 +3,9 @@
 
 package com.project.messagee;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.usergrid.android.client.response.ApiResponse;
 
 import com.project.messagee.R;
@@ -77,11 +80,22 @@ public class AddAccount extends Activity implements View.OnClickListener{
 			//if length of email < 6, show error
 			if(email.length()<6){
 				showAddAccountEmailLengthError();
+				break;
 			}
 
+			//if email does not look like email show error
+			Pattern pattern = Pattern.compile(".+@.+\\.[a-z]+");
+			Matcher matcher = pattern.matcher(email);
+			boolean matchFound = matcher.matches();
+			if(!matchFound){
+				showAddAccountEmailFormatError();
+				break;
+			}
+			
 			//if length password < 5, show error
 			if(password.length()<5){
 				showAddAccountPasswordLengthError();
+				break;
 			}
 
 			//if passwords match try to create account
@@ -197,6 +211,21 @@ public class AddAccount extends Activity implements View.OnClickListener{
 		alert.show();
 	}
 
+	//email length error
+	private void showAddAccountEmailFormatError() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage(
+				"Email format error. eg. ui@jquery.com")
+				.setCancelable(false)
+				.setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int id) {
+						dialog.dismiss();
+					}
+				});
+		AlertDialog alert = builder.create();
+		alert.show();
+	}
+	
 	//show account created dialog
 	private void showAddAccountSuccess() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
