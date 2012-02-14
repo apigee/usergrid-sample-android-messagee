@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layout_root"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent" android:paddingBottom="10dp" android:paddingLeft="10dp" android:paddingRight="10dp" android:paddingTop="0dp">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/username_textbox" android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/search_query"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:background="@color/invisible" android:layout_marginLeft="65dp" android:hint="username" android:layout_centerVertical="true">
+
+            <requestFocus />
+        </EditText>
+
+    </RelativeLayout>
+    <LinearLayout android:orientation="horizontal"
+    android:background="@android:drawable/bottom_bar" android:paddingLeft="4.0dip"
+    android:paddingTop="5.0dip" android:paddingRight="4.0dip"
+    android:paddingBottom="1.0dip" android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <Button android:id="@+id/cancel_button_dialog_id" android:layout_width="0.0dip"
+        android:layout_height="fill_parent" android:text="@string/cancel_string"
+        android:layout_weight="1.0" />
+    <Button android:id="@+id/ok_button_dialog_id" android:layout_width="0.0dip"
+        android:layout_height="fill_parent" android:text="@string/ok_string"
+        android:layout_weight="1.0" />
+</LinearLayout>
+</LinearLayout>

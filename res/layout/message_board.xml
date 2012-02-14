@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="47dp" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/newmess_titlebar" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="fill_parent"
+        android:layout_height="378dp"
+        android:layout_weight="0.12" >
+
+
+
+        <LinearLayout
+            android:id="@+id/linear_layout_posts"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" android:gravity="bottom">
+
+        <ImageButton
+            android:id="@+id/new_message_button_id"
+            android:layout_width="106dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/new_message_btn_xml" 
+            android:background="@color/invisible" />
+
+        <ImageButton
+            android:id="@+id/add_follow_button_id"
+            android:layout_width="107dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_people_btn_xml" 
+            android:background="@color/invisible"/>
+
+        <ImageButton
+            android:id="@+id/logout_button_id"
+            android:layout_height="wrap_content"
+            android:src="@drawable/settings_btn_xml" 
+            android:layout_width="106dp" 
+            android:background="@color/invisible"/>
+
+    </LinearLayout>
+
+</LinearLayout>

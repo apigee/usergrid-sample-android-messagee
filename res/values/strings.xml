@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loginInfo">User-grid account</string>
+    <string name="username">Username*</string>
+    <string name="password">Password*</string>
+    <string name="writeLimit">Enter up to 150 words:</string>
+    <string name="app_name">Messagee</string>
+    <string name="please_enter">Please enter your username &amp; password</string>
+    <string name="name_dialog_string">Name</string>
+    <string name="name_please_dialog_string">Username to follow:</string>
+    <string name="cancel_string">Cancel</string>
+    <string name="ok_string">OK</string>
+    <string name="change_url_title">Enter API URL:</string>
+    <string name="save_string">Save</string>
+    
+</resources>

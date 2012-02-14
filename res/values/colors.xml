@@ -1,0 +1,12 @@
+
+    <resources>
+        <color name="light_gray">#CCCCCC</color>
+        <color name="green">#66FF00</color>
+        <color name="invisible">#00000000</color>
+        <color name="top_login_btn">#39a1b3</color>
+        <color name="bottom_login_btn">#2d8ea0</color>
+        <color name="white">#ffffff</color>
+        <color name="username_blue">#23557c</color>
+        <color name="post_message_gray">#666666</color>
+        <color name="black">#000000</color>
+    </resources>

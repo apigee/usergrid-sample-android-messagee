@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.project.messagee"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="7" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    
+    <application
+        android:icon="@drawable/twidicon"
+        android:label="@string/app_name" 
+        android:name=".Messagee">
+ 
+        <activity
+            
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:name="Splash"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        
+        
+        <activity android:name="Login"
+                  android:screenOrientation="portrait"
+                  android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+        
+        
+        
+        <activity android:name="MessageBoard"
+                  android:screenOrientation="portrait"
+                  android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+        
+        
+        <activity android:name="NewMessage"
+                  android:screenOrientation="portrait"
+				  android:theme="@android:style/Theme.NoTitleBar">
+        </activity>
+        
+        
+        <activity android:name=".AddUserToFollowDialog" 
+            android:screenOrientation="portrait"
+            android:label="@string/name_please_dialog_string" 
+            android:theme="@android:style/Theme.Dialog">
+            
+        </activity>
+
+        <activity android:name="ChangeServerURLDialog" 
+            android:screenOrientation="portrait"
+            android:label="@string/change_url_title" 
+            android:theme="@android:style/Theme.Dialog">
+            
+        </activity>
+        
+        <activity android:name="com.project.messagee.AddAccount"
+                  android:screenOrientation="portrait"
+				  android:theme="@android:style/Theme.NoTitleBar"></activity>
+        
+        
+    </application>
+
+</manifest>

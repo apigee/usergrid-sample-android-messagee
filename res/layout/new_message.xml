@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="47dp" android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/newmess_titlebar" />
+
+        <ImageButton
+            android:id="@+id/closebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginLeft="3dp"
+            android:background="@color/invisible"
+            android:src="@drawable/close_btn_xml" android:scaleType="fitCenter" android:layout_centerVertical="true"/>
+
+        <ImageButton
+            android:id="@+id/postbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="3dp"
+            android:background="@color/invisible"
+            android:src="@drawable/post_btn_xml" android:scaleType="fitCenter" android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/postText"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="2dp"
+        android:gravity="top"
+        android:hint="Enter up to 150 words"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:paddingTop="10dp"
+        android:visibility="visible" >
+
+        <requestFocus />
+    </EditText>
+
+</LinearLayout>
