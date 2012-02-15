@@ -2,6 +2,8 @@
 
 package com.project.controller;
 
+import android.util.Log;
+
 import com.project.model.PostImages;
 import com.project.model.Posts;
 
@@ -21,9 +23,11 @@ public class MessageController {
 	private String USERGRID_API_URL = "http://apigee-test.usergrid.com";
 
 	//Application name
-	public static final String USERGRID_APP = "twid";
+	public static final String USERGRID_APP = "messagee2";
+	public static final String USERGRID_KEY = "YXA6eL1fDFdnEeG_tyIAChxaZw";
+	public static final String USERGRID_SECRET = "YXA6EZLMqNonMTVk2_b5eymv6deBIzs";
 
-
+	
 	//user info
 	private String email;
 	private String username;
@@ -50,7 +54,8 @@ public class MessageController {
 
 	//function to call client login
 	public ApiResponse login(String usernameArg, String passwordArg) {
-
+		
+		
 		//store password
 		this.password = passwordArg;
 
@@ -73,7 +78,9 @@ public class MessageController {
 			imageURL = user.getPicture();
 
 		}
-
+		
+		Log.d("twid","response: " + username);
+		
 		//return login response
 		return response;
 	}
@@ -82,12 +89,21 @@ public class MessageController {
 	//Grab posts using client
 	public void getPostsFromClient(){
 
+
+		
 		//client call to get message board feed
-		ApiResponse resp = client.apiRequest(HttpMethod.GET,null , null, USERGRID_APP, "users",username,"feed");
+		
+		ApiResponse resp = null;
+		try{
+		 resp = client.apiRequest(HttpMethod.GET,null , null, USERGRID_APP, "users",username,"feed");
+		} catch (Exception e) {
+			resp = null;
+		}
+
 
 
 		//if response has posts add them to the Posts and PostImages objects
-		if(resp.getFirstEntity()!=null){
+		if(resp!=null && resp.getFirstEntity()!=null){
 
 			//clear all posts
 			posts.clearAll();
@@ -129,7 +145,12 @@ public class MessageController {
 	public ApiResponse addFollow(String followName){
 
 		//client call to add user to follow
-		ApiResponse resp = client.apiRequest(HttpMethod.POST,null , "{}", USERGRID_APP, "users",username,"following","user",followName);
+		ApiResponse resp = null;
+		try{
+		 resp = client.apiRequest(HttpMethod.POST,null , "{}", USERGRID_APP, "users",username,"following","user",followName);
+		} catch (Exception e) {
+			resp = null;
+		}
 		
 		//return client response
 		return resp;
@@ -160,7 +181,12 @@ public class MessageController {
 		data.put("content",postMess);
 
 		//client call to post message
-		ApiResponse resp = client.apiRequest(HttpMethod.POST,null , data, USERGRID_APP, "users",username,"activities");
+		ApiResponse resp = null;
+		try{
+		 resp =  client.apiRequest(HttpMethod.POST,null , data, USERGRID_APP, "users",username,"activities");
+		} catch (Exception e) {
+			resp = null;
+		}
 
 		//return client response
 		return resp;
@@ -170,6 +196,7 @@ public class MessageController {
 	//client attempt to add account
 	public ApiResponse addAccount(String username, String password, String email){
 		
+
 		
 		//attempt to create account
 		Map<String, Object> data = new HashMap<String,Object>();
@@ -179,10 +206,32 @@ public class MessageController {
 		data.put("email", email);
 		data.put("password", password);
 
-		//client call to add account
-		ApiResponse resp = client.apiRequest(HttpMethod.POST, null, data, USERGRID_APP, "users");
+		//client call to add account		
+		ApiResponse resp = null;
 
+		//attempt to add account
+		try {
+			resp = client.apiRequest(HttpMethod.POST, null, data, USERGRID_APP, "users");
+		} catch (Exception e) {
+			resp = null;
+		}
+		
 		//return client response
+		return resp;
+		
+	}
+	
+	//authorize client
+	public ApiResponse authorizeClient(){
+		
+		ApiResponse resp = null;
+		
+		try{
+		resp = client.authorizeAppClient(USERGRID_KEY, USERGRID_SECRET);
+		} catch (Exception e) {
+			resp = null;
+		}
+		
 		return resp;
 	}
 
@@ -191,7 +240,10 @@ public class MessageController {
 	public String getAPIURL(){return USERGRID_API_URL;}
 
 	//set api url
-	public void setAPIURL(String newURL){this.USERGRID_API_URL = newURL;}
+	public void setAPIURL(String newURL){
+		this.USERGRID_API_URL = newURL;
+		client.setApiUrl(USERGRID_API_URL);
+	}
 
 	//return posts object
 	public Posts getPosts(){return posts;}

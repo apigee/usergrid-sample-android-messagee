@@ -41,8 +41,8 @@ public class Splash extends Activity {
 		@Override
 		protected Void doInBackground(Void... v) {
 			
-			//wait for one second
-			android.os.SystemClock.sleep(1000);
+			//wait
+			android.os.SystemClock.sleep(3000);
 			
 			//kill splash activity
 			finish();
