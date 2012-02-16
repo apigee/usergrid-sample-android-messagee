@@ -253,6 +253,9 @@ public class MessageController {
 
 	//return api url
 	public String getAPIURL(){return USERGRID_API_URL;}
+	
+	//return app name
+	public String getAppName(){return USERGRID_APP;}
 
 	//return api url with app name 
 	public String getAPIURLWithApp(){return USERGRID_API_URL + "/" + USERGRID_APP;}

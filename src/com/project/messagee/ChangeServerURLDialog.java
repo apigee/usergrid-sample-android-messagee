@@ -55,14 +55,11 @@ public class ChangeServerURLDialog extends Activity{
 				//change url to textfield url
 				String apiURL = urlTextField.getText().toString().trim();
 				
-				//grab last url segment and save as app name
+				//grab last url segment and save as app name save remainer as APIURL
 				int indexLastSlash = apiURL.lastIndexOf("/");
-				
-				Log.d("twid","api: " + apiURL.substring(0, (indexLastSlash)));
-				Log.d("twid","app: " + apiURL.substring((indexLastSlash+1), (apiURL.length())));
-				
-				//((Messagee) app).messController.setAPIURL(apiURL.substring(0, (indexLastSlash-1)));
-				 
+
+				((Messagee) app).messController.setAPIURL(apiURL.substring(0, (indexLastSlash)));
+				((Messagee) app).messController.setAppName(apiURL.substring((indexLastSlash+1), (apiURL.length())));
 				
 				//return to login screen
 			  	Intent i = new Intent();
