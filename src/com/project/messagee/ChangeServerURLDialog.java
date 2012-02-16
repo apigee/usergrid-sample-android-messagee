@@ -9,7 +9,9 @@ import com.project.messagee.R;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -49,6 +51,7 @@ public class ChangeServerURLDialog extends Activity{
 			
 			public void onClick(View v) {
 				
+				
 				//change url to textfield url
 				String apiURL = urlTextField.getText().toString().trim();
 				((Messagee) app).messController.setAPIURL(apiURL);
@@ -59,6 +62,7 @@ public class ChangeServerURLDialog extends Activity{
 			  	i.setClassName("com.project.messagee",
 	              "com.project.messagee.Login");
 			  	startActivity(i);
+			  	
 			}
 		});
 		

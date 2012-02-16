@@ -25,7 +25,7 @@ public class Splash extends Activity {
       
       //create thread to wait a bit then switch to login screen
 	  new WaitSplashTask().execute();
-  
+	  
    }
    
    

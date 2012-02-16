@@ -12,8 +12,10 @@ import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -28,7 +30,6 @@ public class Login extends Activity implements View.OnClickListener{
 
 		//set view to login
 		setContentView(R.layout.login);
-
 
 		//grab button handles and set click listeners
 		ImageButton loginButton = (ImageButton) findViewById(R.id.login_button_id);

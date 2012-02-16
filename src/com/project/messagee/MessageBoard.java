@@ -11,6 +11,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageButton;
@@ -30,11 +31,13 @@ public class MessageBoard extends Activity implements View.OnClickListener{
 	//flag to indicate when message board view is active
 	private boolean isActive = true;
 
-
+	AsyncTask<Void, Void, Void> pollThread = null;
+	
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-
+		
+		
 		super.onCreate(savedInstanceState);
 
 		//set view to show message board
@@ -58,13 +61,19 @@ public class MessageBoard extends Activity implements View.OnClickListener{
 
 
 		//periodically poll for new posts in a separate thread
-		new PollForPostsTask(this.getApplication(),this).execute();
+		pollThread = new PollForPostsTask(this.getApplication(),this).execute();
 
 	}
 
 	@Override
 	protected void onResume(){
+
 		super.onResume();
+		
+		if(pollThread.getStatus()==AsyncTask.Status.FINISHED){
+			pollThread = new PollForPostsTask(this.getApplication(),this).execute();
+		}
+		
 
 		//activity resumed set flag to true
 		isActive = true;

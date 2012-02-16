@@ -1,7 +1,17 @@
-//MessageController.java - handles sending/receiving client messages
+//	MessageController.java - handles sending and receiving client messages 
+//
+//	Source code for the android client at: https://github.com/usergrid/usergrid-android-client
+//
+//	information on authentication and authorization at: http://usergrid.github.com/docs/build/html/auth.html#applications
+//
+//	Example of using usergrid to create an application at: http://usergrid.github.com/docs/build/html/running_samples.html
+//
+//  NOTE: you must have usergrid running on a server with an application created in order to run this sample.
+
 
 package com.project.controller;
 
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.project.model.PostImages;
@@ -19,19 +29,26 @@ import org.usergrid.android.client.response.ApiResponse;
 
 public class MessageController {
 
-	//API url
+		
+	// API url:
+	// This is the url of the server where you have usergrid running.
+	// You can see all usergrid activity from the usergrid
+	// console: http://usergrid.github.com/console/?api_url=insert_your_api_url
 	private String USERGRID_API_URL = "http://apigee-test.usergrid.com";
 
-	//Application name
+	// Application name:
+	// This is the name you selected when you set up the usergrid application
 	public static final String USERGRID_APP = "messagee2";
-	public static final String USERGRID_KEY = "YXA6eL1fDFdnEeG_tyIAChxaZw";
-	public static final String USERGRID_SECRET = "YXA6EZLMqNonMTVk2_b5eymv6deBIzs";
+	
+	// These can be found in the usergrid console by selecting the "Settings" tab and looking
+	// under "Application API Credentials".
+	public static final String USERGRID_CLIENT_ID = "YXA6eL1fDFdnEeG_tyIAChxaZw";
+	public static final String USERGRID_CLIENT_SECRET = "YXA6EZLMqNonMTVk2_b5eymv6deBIzs";
 
 	
-	//user info
+	// User variables set when you log in as a specific user
 	private String email;
 	private String username;
-	private String password;
 	private String imageURL;
 	private Client client = null;
 
@@ -44,27 +61,26 @@ public class MessageController {
 	private boolean gettingPostsFlag = false;
 
 
-	//create client with api url
+	//This function creates of communication client with an api url
+	//only one client is created and used by all the applications views to communicate with usergrid.
 	public MessageController(){
-
+		
 		client = new Client(USERGRID_APP).withApiUrl(USERGRID_API_URL);
 
 	}
 
 
-	//function to call client login
+	//This function is used to login using a username and password
+	//calling client.authorizeAppUser(username,password) authorizes the client object 
+	//to perform certain user actions. This must be called before the app can get/post messages 
+	//and add users to follow.
 	public ApiResponse login(String usernameArg, String passwordArg) {
 		
-		
-		//store password
-		this.password = passwordArg;
-
-
 		ApiResponse response=null;
 
 		//attempt to authorize user
 		try {
-			response = client.authorizeAppUser(usernameArg, password);
+			response = client.authorizeAppUser(usernameArg, passwordArg);
 		} catch (Exception e) {
 			response = null;
 		}
@@ -79,20 +95,32 @@ public class MessageController {
 
 		}
 		
-		Log.d("twid","response: " + username);
 		
 		//return login response
 		return response;
 	}
 
 
-	//Grab posts using client
+	//A number of requests can be made using the apiRequest function. It takes the following arguments:
+	//
+	// 1) method
+	//            HttpMethod method
+	// 2) params
+	//            parameters to encode as querystring or body parameters
+	// 3) data
+	//            JSON data to put in body
+	// 4-n) segments
+	//            REST url path segments (i.e. /segment1/segment2/segment3)
+	//
+	// apiRequest returns a message that contains transaction information such as requested info, errors, or success notifications.
+	//
+	//getPostsFromClient uses apiRequest to grab the information from the current user's feed.
+	//The feed is then parsed to grab data for each post.
 	public void getPostsFromClient(){
 
 
 		
 		//client call to get message board feed
-		
 		ApiResponse resp = null;
 		try{
 		 resp = client.apiRequest(HttpMethod.GET,null , null, USERGRID_APP, "users",username,"feed");
@@ -141,7 +169,7 @@ public class MessageController {
 	}
 
 	
-	//client call to add user to follow
+	//client call to add user to follow using apiRequest
 	public ApiResponse addFollow(String followName){
 
 		//client call to add user to follow
@@ -158,6 +186,8 @@ public class MessageController {
 
 	
 	//client call to post new message
+	//This function builds a map of data to be sent as an "activity", in this case a post. 
+	//The post is added to the activities for the current user.
 	public ApiResponse post(String postMess){
 
 		//post properties
@@ -193,7 +223,8 @@ public class MessageController {
 	}
 
 	
-	//client attempt to add account
+	//client add account
+	//apiRequest is used to send a map containing new account info.
 	public ApiResponse addAccount(String username, String password, String email){
 		
 
@@ -227,7 +258,7 @@ public class MessageController {
 		ApiResponse resp = null;
 		
 		try{
-		resp = client.authorizeAppClient(USERGRID_KEY, USERGRID_SECRET);
+		resp = client.authorizeAppClient(USERGRID_CLIENT_ID, USERGRID_CLIENT_SECRET);
 		} catch (Exception e) {
 			resp = null;
 		}
