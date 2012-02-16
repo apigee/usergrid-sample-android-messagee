@@ -38,7 +38,7 @@ public class ChangeServerURLDialog extends Activity{
 		
 		//get handle to textfield and set text to current url
 		urlTextField = (EditText)findViewById(R.id.url_textfield_id);
-		urlTextField.setText(((Messagee) this.getApplication()).messController.getAPIURL());
+		urlTextField.setText(((Messagee) this.getApplication()).messController.getAPIURLWithApp());
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
 				WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
 		
@@ -54,7 +54,14 @@ public class ChangeServerURLDialog extends Activity{
 				
 				//change url to textfield url
 				String apiURL = urlTextField.getText().toString().trim();
-				((Messagee) app).messController.setAPIURL(apiURL);
+				
+				//grab last url segment and save as app name
+				int indexLastSlash = apiURL.lastIndexOf("/");
+				
+				Log.d("twid","api: " + apiURL.substring(0, (indexLastSlash)));
+				Log.d("twid","app: " + apiURL.substring((indexLastSlash+1), (apiURL.length())));
+				
+				//((Messagee) app).messController.setAPIURL(apiURL.substring(0, (indexLastSlash-1)));
 				 
 				
 				//return to login screen

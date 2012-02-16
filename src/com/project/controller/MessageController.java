@@ -29,23 +29,20 @@ import org.usergrid.android.client.response.ApiResponse;
 
 public class MessageController {
 
-		
+
 	// API url:
 	// This is the url of the server where you have usergrid running.
 	// You can see all usergrid activity from the usergrid
 	// console: http://usergrid.github.com/console/?api_url=insert_your_api_url
 	private String USERGRID_API_URL = "http://apigee-test.usergrid.com";
-
+	
 	// Application name:
 	// This is the name you selected when you set up the usergrid application
-	public static final String USERGRID_APP = "messagee2";
-	
-	// These can be found in the usergrid console by selecting the "Settings" tab and looking
-	// under "Application API Credentials".
-	public static final String USERGRID_CLIENT_ID = "YXA6eL1fDFdnEeG_tyIAChxaZw";
-	public static final String USERGRID_CLIENT_SECRET = "YXA6EZLMqNonMTVk2_b5eymv6deBIzs";
+	// It is reassigned when a new server url is entered while running the app. It is grabbed as the 
+	// last segment of the API URL that the user enters.
+	private String USERGRID_APP = "messagee2";
 
-	
+
 	// User variables set when you log in as a specific user
 	private String email;
 	private String username;
@@ -64,9 +61,9 @@ public class MessageController {
 	//This function creates of communication client with an api url
 	//only one client is created and used by all the applications views to communicate with usergrid.
 	public MessageController(){
-		
-		client = new Client(USERGRID_APP).withApiUrl(USERGRID_API_URL);
 
+		client = new Client(USERGRID_APP).withApiUrl(USERGRID_API_URL);
+		
 	}
 
 
@@ -75,7 +72,7 @@ public class MessageController {
 	//to perform certain user actions. This must be called before the app can get/post messages 
 	//and add users to follow.
 	public ApiResponse login(String usernameArg, String passwordArg) {
-		
+
 		ApiResponse response=null;
 
 		//attempt to authorize user
@@ -94,8 +91,8 @@ public class MessageController {
 			imageURL = user.getPicture();
 
 		}
-		
-		
+
+
 		//return login response
 		return response;
 	}
@@ -119,11 +116,11 @@ public class MessageController {
 	public void getPostsFromClient(){
 
 
-		
+
 		//client call to get message board feed
 		ApiResponse resp = null;
 		try{
-		 resp = client.apiRequest(HttpMethod.GET,null , null, USERGRID_APP, "users",username,"feed");
+			resp = client.apiRequest(HttpMethod.GET,null , null, USERGRID_APP, "users",username,"feed");
 		} catch (Exception e) {
 			resp = null;
 		}
@@ -168,23 +165,24 @@ public class MessageController {
 
 	}
 
-	
+
 	//client call to add user to follow using apiRequest
 	public ApiResponse addFollow(String followName){
 
 		//client call to add user to follow
 		ApiResponse resp = null;
 		try{
-		 resp = client.apiRequest(HttpMethod.POST,null , "{}", USERGRID_APP, "users",username,"following","user",followName);
+			resp = client.apiRequest(HttpMethod.POST,null , "{}", USERGRID_APP, "users",username,"following","user",followName);
+
 		} catch (Exception e) {
 			resp = null;
 		}
-		
+
 		//return client response
 		return resp;
 	}
 
-	
+
 	//client call to post new message
 	//This function builds a map of data to be sent as an "activity", in this case a post. 
 	//The post is added to the activities for the current user.
@@ -194,12 +192,12 @@ public class MessageController {
 		Map<String, Object> data = new HashMap<String,Object>();
 		Map<String, Object> actor = new HashMap<String,Object>();
 		Map<String, Object> image = new HashMap<String,Object>();
-		
+
 		//add image url, height, and width of image
 		image.put("url", imageURL);
 		image.put("height", 80);
 		image.put("width", 80);
-		
+
 		//add username, image, and email
 		actor.put("displayName", username);
 		actor.put("image", image);
@@ -213,7 +211,7 @@ public class MessageController {
 		//client call to post message
 		ApiResponse resp = null;
 		try{
-		 resp =  client.apiRequest(HttpMethod.POST,null , data, USERGRID_APP, "users",username,"activities");
+			 resp =  client.apiRequest(HttpMethod.POST,null , data, USERGRID_APP, "users",username,"activities");
 		} catch (Exception e) {
 			resp = null;
 		}
@@ -222,13 +220,13 @@ public class MessageController {
 		return resp;
 	}
 
-	
+
 	//client add account
 	//apiRequest is used to send a map containing new account info.
 	public ApiResponse addAccount(String username, String password, String email){
-		
 
-		
+
+
 		//attempt to create account
 		Map<String, Object> data = new HashMap<String,Object>();
 
@@ -243,23 +241,31 @@ public class MessageController {
 		//attempt to add account
 		try {
 			resp = client.apiRequest(HttpMethod.POST, null, data, USERGRID_APP, "users");
-		} catch (Exception e) {
+			} catch (Exception e) {
 			resp = null;
 		}
-		
+
 		//return client response
 		return resp;
-		
+
 	}
 
-	
+
 	//return api url
 	public String getAPIURL(){return USERGRID_API_URL;}
 
+	//return api url with app name 
+	public String getAPIURLWithApp(){return USERGRID_API_URL + "/" + USERGRID_APP;}
+	
 	//set api url
 	public void setAPIURL(String newURL){
 		this.USERGRID_API_URL = newURL;
 		client.setApiUrl(USERGRID_API_URL);
+	}
+	
+	//set app name
+	public void setAppName(String appName){
+		this.USERGRID_APP = appName;
 	}
 
 	//return posts object
@@ -267,7 +273,7 @@ public class MessageController {
 
 	//return postImage object
 	public PostImages getPostImages(){return postImages;}
-	
+
 	//return reading posts flag
 	public boolean getFlagReadingPosts(){return gettingPostsFlag;}
 
