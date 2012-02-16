@@ -266,9 +266,6 @@ public class AddAccount extends Activity implements View.OnClickListener{
 		//main function, attempts to add account
 		protected ApiResponse doInBackground(Void... v) {
 			
-			//authorize client
-			((Messagee) app).messController.authorizeClient();
-			
 			//attempt to post message
 			return ((Messagee) app).messController.addAccount(username, password, email);
 

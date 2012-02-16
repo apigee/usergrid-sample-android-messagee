@@ -251,20 +251,6 @@ public class MessageController {
 		return resp;
 		
 	}
-	
-	//authorize client
-	public ApiResponse authorizeClient(){
-		
-		ApiResponse resp = null;
-		
-		try{
-		resp = client.authorizeAppClient(USERGRID_CLIENT_ID, USERGRID_CLIENT_SECRET);
-		} catch (Exception e) {
-			resp = null;
-		}
-		
-		return resp;
-	}
 
 	
 	//return api url
