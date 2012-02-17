@@ -140,22 +140,44 @@ public class MessageController {
 				Map<String, JsonNode> properties = resp.getEntities().get(i).getProperties();
 
 
-				//get name string
-				String poster ="Empty Username";
-
-				if(properties.get("actor").get("displayName")!=null){
-					poster = properties.get("actor").get("displayName").getTextValue();	
+				//get name string and url string
+				String poster ="";
+				String urlPic = null;
+				
+				JsonNode actor = properties.get("actor");
+				
+				if(actor!=null){
+					
+					JsonNode displayName = actor.get("displayName");
+					JsonNode image = actor.get("image");
+					
+					if(displayName!=null){
+						poster = displayName.getTextValue();	
+					}
+					
+					if(image!=null){
+						JsonNode imageUrl = image.get("url");
+						if(imageUrl!=null){
+							urlPic = imageUrl.getTextValue();
+						}
+					}
+					
+					//support for a slightly different Json format
+					else{
+						JsonNode picture = actor.get("picture");
+						if(picture!=null){
+							urlPic = picture.getTextValue();
+						}
+					}
 				}
 
 				//get post 
-				String post ="Empty Post";
-
-				if(properties.get("content")!=null){
-					post = properties.get("content").getTextValue();
+				String post ="";
+				JsonNode content = properties.get("content");
+				if(content!=null){
+					post = content.getTextValue();
 				}
-
-				//get image url
-				String urlPic = properties.get("actor").get("image").get("url").getTextValue();
+				
 
 				//add post to posts object
 				posts.addPost(poster, post, urlPic);
