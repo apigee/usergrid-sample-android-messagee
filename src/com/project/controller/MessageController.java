@@ -269,6 +269,7 @@ public class MessageController {
 	//set app name
 	public void setAppName(String appName){
 		this.USERGRID_APP = appName;
+		client.setApplicationId(appName);
 	}
 
 	//return posts object
