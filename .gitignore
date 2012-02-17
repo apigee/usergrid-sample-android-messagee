@@ -12,3 +12,5 @@ build
 *.ipr
 *.iws
 *.class
+
+gen/com/project/messagee/R.java
