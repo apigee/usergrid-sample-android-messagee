@@ -35,7 +35,7 @@ public class MessageController {
 	// It is reassigned when a new server url is entered while running the app.
 	// It is grabbed as the
 	// last segment of the API URL that the user enters.
-	private String USERGRID_APP = "MessageeApp";
+	private String USERGRID_APP = "Apigee/MessageeApp";
 
 	// User variables set when you log in as a specific user
 	private String email;
