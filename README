@@ -1,3 +1,22 @@
 Messagee is a sample android app that acts as a Usergrid client.
 
-Moved to https://github.com/apigee/usergrid-sample-android-messagee
+
+I make a truck from 
+https://github.com/apigee/usergrid-sample-android-messagee
+to
+https://github.com/ablozhou/usergrid-sample-android-messagee
+
+1. Change to newest usergrid sdk.
+
+2. Add messagee to ADT eclipse project.
+
+3. Change to newest library of fastxml.
+
+I also create an ADT eclipse project of newest UserGrid Android SDK.
+https://github.com/ablozhou/usergrid.
+
+Some Chinese comments can be found on my blog:
+http://abloz.com
+
+Andy Zhou
+2015.6.11 
