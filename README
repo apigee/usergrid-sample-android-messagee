@@ -1,10 +1,21 @@
-Messagee is a sample android app that acts as a Usergrid client.
+Messagee is a sample android app that acts as a Apache Usergrid client.
 
+The Usergrid homepage is:
+http://usergrid.incubator.apache.org/
+
+source code is:
+https://github.com/apache/incubator-usergrid
+
+Apigee once write a sample of Usergrid android sdk client, 
+since it was written 3 years ago, and cann't run on the newest
+Apache Usergrid sdk.
 
 I make a fork from 
 https://github.com/apigee/usergrid-sample-android-messagee
 to
 https://github.com/ablozhou/usergrid-sample-android-messagee
+
+Thanks to apigee.
 
 1. Change to newest usergrid sdk.
 
