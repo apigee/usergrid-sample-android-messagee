@@ -38,7 +38,7 @@ public class MessageController {
 	
 	private String USERGRID_ORG = "bbjorg";
 	private String USERGRID_APP = "bbjapp";
-	private String USERGRID_ORG_APP = "bbjorg/bbjapp";
+	//private String USERGRID_ORG_APP = "bbjapp";
 
 	// User variables set when you log in as a specific user
 	private String email;
@@ -131,7 +131,7 @@ public class MessageController {
 		   // UGClient.ApiResponse apiRequest(String httpMethod,
 		   //         Map<String, Object> params, Object data, String... segments) 
 		   //old:resp = client.apiRequest(HttpMethod.GET, null, null, USERGRID_APP,
-			resp = client.apiRequest("GET", null, null, USERGRID_ORG_APP,
+			resp = client.apiRequest("GET", null, null, USERGRID_ORG,USERGRID_APP,
 					"users", username, "feed");
 		} catch (Exception e) {
 			resp = null;
@@ -202,7 +202,7 @@ public class MessageController {
 		// client call to add user to follow
 		ApiResponse resp = null;
 		try {
-			resp = client.apiRequest("POST", null, "{}", USERGRID_ORG_APP,
+			resp = client.apiRequest("POST", null, "{}", USERGRID_ORG,USERGRID_APP,
 					"users", username, "following", "user", followName);
 
 		} catch (Exception e) {
@@ -242,7 +242,7 @@ public class MessageController {
 		// client call to post message
 		ApiResponse resp = null;
 		try {
-			resp = client.apiRequest("POST", null, data, USERGRID_ORG_APP,
+			resp = client.apiRequest("POST", null, data, USERGRID_ORG,USERGRID_APP,
 					"users", username, "activities");
 		} catch (Exception e) {
 			resp = null;
@@ -269,7 +269,7 @@ public class MessageController {
 
 		// attempt to add account
 		try {
-			resp = client.apiRequest("POST", null, data, USERGRID_ORG_APP,
+			resp = client.apiRequest("POST", null, data, USERGRID_ORG,USERGRID_APP,
 					"users");
 		} catch (Exception e) {
 			resp = null;
@@ -295,14 +295,11 @@ public class MessageController {
 		return USERGRID_ORG;
 	}
 	
-	// return org name
-	public String getOrgAppName() {
-		return USERGRID_ORG_APP;
-	}
+	
 
 	// return api url with app name
 	public String getAPIURLWithApp() {
-		return USERGRID_API_URL + "/" + USERGRID_ORG_APP;
+		return USERGRID_API_URL + "/" + USERGRID_ORG+"/"+USERGRID_APP;
 	}
 
 	// set api url
