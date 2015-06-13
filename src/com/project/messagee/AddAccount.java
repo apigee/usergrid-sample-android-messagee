@@ -6,7 +6,7 @@ package com.project.messagee;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.usergrid.android.client.response.ApiResponse;
+import org.apache.usergrid.android.sdk.response.ApiResponse;
 
 import com.project.messagee.R;
 

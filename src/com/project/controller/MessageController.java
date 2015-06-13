@@ -13,12 +13,12 @@ package com.project.controller;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.codehaus.jackson.JsonNode;
-import org.springframework.http.HttpMethod;
-import org.usergrid.android.client.Client;
-import org.usergrid.android.client.entities.User;
-import org.usergrid.android.client.response.ApiResponse;
+import org.apache.usergrid.android.sdk.UGClient;
 
+import org.apache.usergrid.android.sdk.entities.User;
+import org.apache.usergrid.android.sdk.response.ApiResponse;
+
+import com.fasterxml.jackson.databind.JsonNode;
 import com.project.model.PostImages;
 import com.project.model.Posts;
 
@@ -28,20 +28,23 @@ public class MessageController {
 	// This is the url of the server where you have usergrid running.
 	// You can see all usergrid activity from the usergrid
 	// console: http://usergrid.github.com/console/?api_url=insert_your_api_url
-	private String USERGRID_API_URL = "http://api.usergrid.com";
-
+//	private String USERGRID_API_URL = "http://api.usergrid.com";
+	private String USERGRID_API_URL = "http://172.17.11.11:8080";
 	// Application name:
 	// This is the name you selected when you set up the usergrid application
 	// It is reassigned when a new server url is entered while running the app.
 	// It is grabbed as the
 	// last segment of the API URL that the user enters.
-	private String USERGRID_APP = "Apigee/MessageeApp";
+	
+	private String USERGRID_ORG = "bbjorg";
+	private String USERGRID_APP = "bbjapp";
+	//private String USERGRID_ORG_APP = "bbjapp";
 
 	// User variables set when you log in as a specific user
 	private String email;
 	private String username;
 	private String imageURL;
-	private Client client = null;
+	private UGClient client = null;
 
 	// create posts and postImages to store message board posts
 	private final Posts posts = new Posts();
@@ -55,7 +58,7 @@ public class MessageController {
 	// communicate with usergrid.
 	public MessageController() {
 
-		client = new Client(USERGRID_APP).withApiUrl(USERGRID_API_URL);
+		client = new UGClient(USERGRID_ORG,USERGRID_APP).withApiUrl(USERGRID_API_URL);
 
 	}
 
@@ -71,13 +74,13 @@ public class MessageController {
 
 		// attempt to authorize user
 		try {
-			response = client.authorizeAppUser(usernameArg, passwordArg);
+			response =  client.authorizeAppUser(usernameArg, passwordArg);
 		} catch (Exception e) {
 			response = null;
 		}
 
-		// if response shows success, store account info
-		if ((response != null) && !"invalid_grant".equals(response.getError())) {
+		// if response shows success, store account info//
+		if ( (response != null ) && !"invalid_grant".equals(response.getError() ) ){
 
 			User user = response.getUser();
 			email = user.getEmail();
@@ -113,7 +116,22 @@ public class MessageController {
 		// client call to get message board feed
 		ApiResponse resp = null;
 		try {
-			resp = client.apiRequest(HttpMethod.GET, null, null, USERGRID_APP,
+			/*
+		     * High-level synchronous API request. Implements the http request
+		     * for most SDK methods by calling 
+		     * {@link #doHttpRequest(String,Map,Object,String...)}
+		     * 
+		     *  @param  httpMethod the HTTP method in the format: 
+		     *      HTTP_METHOD_<method_name> (e.g. HTTP_METHOD_POST)
+		     *  @param  params the URL parameters to append to the request URL
+		     *  @param  data the body of the request
+		     *  @param  segments  additional URL path segments to append to the request URL 
+		     *  @return  ApiResponse object
+		     */
+		   // UGClient.ApiResponse apiRequest(String httpMethod,
+		   //         Map<String, Object> params, Object data, String... segments) 
+		   //old:resp = client.apiRequest(HttpMethod.GET, null, null, USERGRID_APP,
+			resp = client.apiRequest("GET", null, null, USERGRID_ORG,USERGRID_APP,
 					"users", username, "feed");
 		} catch (Exception e) {
 			resp = null;
@@ -144,13 +162,13 @@ public class MessageController {
 					JsonNode image = actor.get("image");
 
 					if (displayName != null) {
-						poster = displayName.getTextValue();
+						poster = displayName.textValue();
 					}
 
 					if (image != null) {
 						JsonNode imageUrl = image.get("url");
 						if (imageUrl != null) {
-							urlPic = imageUrl.getTextValue();
+							urlPic = imageUrl.textValue();
 						}
 					}
 
@@ -158,7 +176,7 @@ public class MessageController {
 					else {
 						JsonNode picture = actor.get("picture");
 						if (picture != null) {
-							urlPic = picture.getTextValue();
+							urlPic = picture.textValue();
 						}
 					}
 				}
@@ -167,7 +185,7 @@ public class MessageController {
 				String post = "";
 				JsonNode content = properties.get("content");
 				if (content != null) {
-					post = content.getTextValue();
+					post = content.textValue();
 				}
 
 				// add post to posts object
@@ -184,7 +202,7 @@ public class MessageController {
 		// client call to add user to follow
 		ApiResponse resp = null;
 		try {
-			resp = client.apiRequest(HttpMethod.POST, null, "{}", USERGRID_APP,
+			resp = client.apiRequest("POST", null, "{}", USERGRID_ORG,USERGRID_APP,
 					"users", username, "following", "user", followName);
 
 		} catch (Exception e) {
@@ -224,7 +242,7 @@ public class MessageController {
 		// client call to post message
 		ApiResponse resp = null;
 		try {
-			resp = client.apiRequest(HttpMethod.POST, null, data, USERGRID_APP,
+			resp = client.apiRequest("POST", null, data, USERGRID_ORG,USERGRID_APP,
 					"users", username, "activities");
 		} catch (Exception e) {
 			resp = null;
@@ -251,7 +269,7 @@ public class MessageController {
 
 		// attempt to add account
 		try {
-			resp = client.apiRequest(HttpMethod.POST, null, data, USERGRID_APP,
+			resp = client.apiRequest("POST", null, data, USERGRID_ORG,USERGRID_APP,
 					"users");
 		} catch (Exception e) {
 			resp = null;
@@ -271,10 +289,17 @@ public class MessageController {
 	public String getAppName() {
 		return USERGRID_APP;
 	}
+	
+	// return org name
+	public String getOrgName() {
+		return USERGRID_ORG;
+	}
+	
+	
 
 	// return api url with app name
 	public String getAPIURLWithApp() {
-		return USERGRID_API_URL + "/" + USERGRID_APP;
+		return USERGRID_API_URL + "/" + USERGRID_ORG+"/"+USERGRID_APP;
 	}
 
 	// set api url
@@ -287,6 +312,12 @@ public class MessageController {
 	public void setAppName(String appName) {
 		this.USERGRID_APP = appName;
 		client.setApplicationId(appName);
+	}
+	
+	// set org name
+	public void setOrgName(String orgName) {
+		this.USERGRID_ORG = orgName;
+		client.setOrganizationId(orgName);
 	}
 
 	// return posts object

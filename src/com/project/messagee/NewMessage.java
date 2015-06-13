@@ -2,7 +2,7 @@
 
 package com.project.messagee;
 
-import org.usergrid.android.client.response.ApiResponse;
+import org.apache.usergrid.android.sdk.response.ApiResponse;
 
 import com.project.messagee.R;
 
